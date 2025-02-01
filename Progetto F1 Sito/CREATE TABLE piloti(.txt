@@ -1,0 +1,41 @@
+CREATE TABLE piloti(
+	id INT IDENTITY(1,1) PRIMARY KEY,
+	nome VARCHAR(100) NOT NULL,
+	cognome varchar(100)NOT NULL,
+	scuderia varchar(100)NOT NULL
+	);
+CREATE TABLE gare (
+    id INT IDENTITY(1,1) PRIMARY KEY,  
+    pilota_id INT,                     
+    tempo INT,
+	numero_giro INT,
+    data_gara DATE,                     
+    FOREIGN KEY (pilota_id) REFERENCES piloti(id)
+);
+CREATE TABLE pit_stops (
+    id INT IDENTITY(1,1) PRIMARY KEY,  
+    pilota_id INT,                     
+    gara_id INT,                       
+    giro INT,                           
+    durata decimal(4,2),                         
+    FOREIGN KEY (pilota_id) REFERENCES piloti(id),
+    FOREIGN KEY (gara_id) REFERENCES gare(id)
+);
+CREATE TABLE strategie_pit_stop (
+    id INT IDENTITY(1,1) PRIMARY KEY,  
+    pilota_id INT,
+	gara_id INT, 
+    numero_pit_stop_effettuati INT,
+    numero_pit_stop_previsti INT,
+    FOREIGN KEY (pilota_id) REFERENCES piloti(id),
+	FOREIGN KEY (gara_id) REFERENCES gare(id)
+);
+CREATE TABLE classifica (
+    id INT IDENTITY(1,1) PRIMARY KEY,  
+    gara_id INT,                       
+    pilota_id INT,                     
+    posizione INT,                     
+    punti_totali INT,                  
+    FOREIGN KEY (gara_id) REFERENCES gare(id),
+	FOREIGN KEY (pilota_id) REFERENCES piloti(id)
+);
